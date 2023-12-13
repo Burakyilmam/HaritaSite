@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.33711.374
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaritaSite", "HaritaSite\HaritaSite.csproj", "{E67BC330-187D-4462-B949-18C9FD2F7F30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E67BC330-187D-4462-B949-18C9FD2F7F30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E67BC330-187D-4462-B949-18C9FD2F7F30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E67BC330-187D-4462-B949-18C9FD2F7F30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E67BC330-187D-4462-B949-18C9FD2F7F30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {16DC5E25-362C-463F-8D86-E44525B46B8A}
+	EndGlobalSection
+EndGlobal

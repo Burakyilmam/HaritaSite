@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="map"></div>
+<form method="post" action="/Home/SaveDrawing">
+    <input type="hidden" name="Coordinates" id="coordinatesInput" value="" />
+    <input type="hidden" name="Type" id="typeInput" value="" />
+    <button type="submit">Save Drawing</button>
+</form>
+
+
