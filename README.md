@@ -1,2 +1,2 @@
 # HaritaSite
-.NET Core 6 , Entityframework ve  Leaflet.JS kullanılarak oluşturulan ve veritabanı kullanan harita örneğidir.
+.NET Core 6 , Entityframework , PostgreSQL ve Leaflet.JS kullanılarak oluşturulan harita örneğidir.
