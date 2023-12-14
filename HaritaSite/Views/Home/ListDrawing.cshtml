@@ -10,6 +10,7 @@
         <th>Id</th>
         <th>Type</th>
         <th>Coordinates</th>
+        <th>Shape</th>
         <th>CreateDate</th>
         <th>Statu</th>
     </tr>        
@@ -19,6 +20,20 @@
             <td>@item.Id</td>
             <td>@item.Type</td>
             <td>@item.Coordinates</td>
+            <td>
+                <div id="map_@item.Id" style="width: 200px; height: 150px;"></div>
+                <script>
+                    var coordinates = @Html.Raw(Json.Serialize(item.Shape.Coordinates));
+                    var map = L.map('map_@item.Id').setView([coordinates[0][1], coordinates[0][0]], 12);
+
+                    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: 'OpenStreetMap'
+                    }).addTo(map);
+
+                    var polyline = L.polyline(coordinates, { color: 'blue' }).addTo(map);
+                    map.fitBounds(polyline.getBounds());
+                </script>
+            </td>
             <td>@item.CreateDate</td>
             <td>@item.Statu</td>
         </tr>

@@ -40,6 +40,5 @@
         document.getElementById('coordinatesInput').value = coordinates;
         document.getElementById('typeInput').value = shapeType;
 
-        console.log(coordinates[0]);
-        console.log(coordinates[1]);
+        console.log(coordinates);
     });
