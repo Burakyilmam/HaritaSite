@@ -35,9 +35,11 @@
 
         var geoJSON = layer.toGeoJSON();
         var shapeType = geoJSON.geometry.type;
-        var coordinates = JSON.stringify(geoJSON.geometry.coordinates);
+        var coordinates = geoJSON.geometry.coordinates;
 
         document.getElementById('coordinatesInput').value = coordinates;
         document.getElementById('typeInput').value = shapeType;
-        document.getElementById('geometryInput').value = geoJSON.geometry;
+
+        console.log(coordinates[0]);
+        console.log(coordinates[1]);
     });

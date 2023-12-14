@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HaritaSite.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231214113910_mig0")]
-    partial class mig0
+    [Migration("20231214124452_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

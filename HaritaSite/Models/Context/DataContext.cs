@@ -15,13 +15,13 @@ namespace HaritaSite.Models.Context
             modelBuilder.HasPostgresExtension("postgis");
 
             modelBuilder.Entity<Drawing>()
-                .Property(d => d.Shape)
-                .HasColumnType("geometry")
-                .HasColumnName("Shape")
-                .HasConversion(
-                    p => new NetTopologySuite.IO.WKTWriter().Write(p),
-                    wkt => new NetTopologySuite.IO.WKTReader().Read(wkt)
-                );
+                            .Property(d => d.Shape)
+                            .HasColumnType("geometry")
+                            .HasColumnName("Shape")
+                            .HasConversion(
+                                shape => shape == null ? null : new NetTopologySuite.IO.WKTWriter().Write(shape),
+                                wkt => string.IsNullOrWhiteSpace(wkt) ? null : new NetTopologySuite.IO.WKTReader().Read(wkt)
+                            );
 
             base.OnModelCreating(modelBuilder);
         }

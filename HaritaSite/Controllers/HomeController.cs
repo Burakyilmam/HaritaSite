@@ -2,6 +2,7 @@
 using HaritaSite.Models.Context;
 using HaritaSite.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
 
 using System.Diagnostics;
@@ -32,9 +33,19 @@ namespace HaritaSite.Controllers
         {
             drawing.Statu = true;
             drawing.CreateDate = DateTime.Now.ToUniversalTime();
+            if (drawing.Type == "Point")
+            {
+                string[] coordinates = drawing.Coordinates.Split(',');
+                double x = double.Parse(coordinates[0]);
+                double y = double.Parse(coordinates[1]);
+
+                drawing.Shape = new NetTopologySuite.Geometries.Point(x, y) { SRID = 4326 };
+            }
             _dataContext.Add(drawing);
             _dataContext.SaveChanges();
+
             return RedirectToAction("Home");
         }
+
     }
 }
