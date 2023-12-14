@@ -2,7 +2,10 @@
 using HaritaSite.Models.Context;
 using HaritaSite.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
+using NetTopologySuite.Geometries;
+
 using System.Diagnostics;
+using System.Drawing;
 
 namespace HaritaSite.Controllers
 {
@@ -24,6 +27,7 @@ namespace HaritaSite.Controllers
             var drawing = _dataContext.Drawings.ToList();
             return View(drawing);
         }
+        [HttpPost]
         public IActionResult SaveDrawing(Drawing drawing)
         {
             drawing.Statu = true;

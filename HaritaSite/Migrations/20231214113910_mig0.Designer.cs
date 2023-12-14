@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HaritaSite.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231213182532_mig1")]
-    partial class mig1
+    [Migration("20231214113910_mig0")]
+    partial class mig0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,7 @@ namespace HaritaSite.Migrations
                 .HasAnnotation("ProductVersion", "6.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("HaritaSite.Models.Entity.Drawing", b =>
@@ -39,6 +40,10 @@ namespace HaritaSite.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Shape")
+                        .HasColumnType("geometry")
+                        .HasColumnName("Shape");
+
                     b.Property<bool>("Statu")
                         .HasColumnType("boolean");
 
@@ -49,41 +54,6 @@ namespace HaritaSite.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Drawings");
-                });
-
-            modelBuilder.Entity("HaritaSite.Models.Entity.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Statu")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

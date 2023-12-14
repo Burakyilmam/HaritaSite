@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using NetTopologySuite.Geometries;
 
 namespace HaritaSite.Models.Entity
 {
@@ -6,6 +6,6 @@ namespace HaritaSite.Models.Entity
     {
         public string Type { get; set; }
         public string Coordinates { get; set; }
-        //public Point Shape { get; set; }
+        public Geometry? Shape { get; set; }
     }
 }
