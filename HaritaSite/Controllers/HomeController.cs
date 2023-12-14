@@ -33,6 +33,7 @@ namespace HaritaSite.Controllers
         {
             drawing.Statu = true;
             drawing.CreateDate = DateTime.Now.ToUniversalTime();
+
             if (drawing.Type == "Point")
             {
                 string[] coordinates = drawing.Coordinates.Split(',');
@@ -41,6 +42,32 @@ namespace HaritaSite.Controllers
 
                 drawing.Shape = new NetTopologySuite.Geometries.Point(x, y) { SRID = 4326 };
             }
+            else if (drawing.Type == "LineString")
+            {
+                string[] coordinatePairs = drawing.Coordinates.Split(',');
+
+                if (coordinatePairs.Length < 2)
+                {
+                    ModelState.AddModelError("Coordinates", "LineString için çift sayıda koordinat gereklidir.");
+                    return View(drawing);
+                }
+
+                List<Coordinate> coordinates = new List<Coordinate>();
+
+
+                for (int i = 0; i < coordinatePairs.Length; i += 2)
+                {
+                    double x = double.Parse(coordinatePairs[i]);
+                    double y = double.Parse(coordinatePairs[i + 1]);
+                    coordinates.Add(new Coordinate(x, y));
+                }
+
+                if (coordinates.Count >= 2)
+                {
+                    drawing.Shape = new LineString(coordinates.ToArray()) { SRID = 4326 };
+                }
+            }
+
             _dataContext.Add(drawing);
             _dataContext.SaveChanges();
 
