@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HaritaSite.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class migration2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

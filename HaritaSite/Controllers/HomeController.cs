@@ -46,14 +46,13 @@ namespace HaritaSite.Controllers
             {
                 string[] coordinatePairs = drawing.Coordinates.Split(',');
 
-                if (coordinatePairs.Length < 2)
+                if (coordinatePairs.Length < 2 || coordinatePairs.Length % 2 != 0)
                 {
-                    ModelState.AddModelError("Coordinates", "LineString için çift sayıda koordinat gereklidir.");
+                    ModelState.AddModelError("Coordinates", "LineString için uygun sayıda koordinat gereklidir.");
                     return View(drawing);
                 }
 
                 List<Coordinate> coordinates = new List<Coordinate>();
-
 
                 for (int i = 0; i < coordinatePairs.Length; i += 2)
                 {
@@ -62,10 +61,30 @@ namespace HaritaSite.Controllers
                     coordinates.Add(new Coordinate(x, y));
                 }
 
-                if (coordinates.Count >= 2)
+                drawing.Shape = new LineString(coordinates.ToArray()) { SRID = 4326 };
+            }
+            else if (drawing.Type == "Polygon")
+            {
+                string[] coordinatePairs = drawing.Coordinates.Split(',');
+
+                if (coordinatePairs.Length < 6 || coordinatePairs.Length % 2 != 0)
                 {
-                    drawing.Shape = new LineString(coordinates.ToArray()) { SRID = 4326 };
+                    ModelState.AddModelError("Coordinates", "Polygon için uygun sayıda koordinat gereklidir.");
+                    return View(drawing);
                 }
+
+                List<Coordinate> coordinates = new List<Coordinate>();
+
+                for (int i = 0; i < coordinatePairs.Length; i += 2)
+                {
+                    double x = double.Parse(coordinatePairs[i]);
+                    double y = double.Parse(coordinatePairs[i + 1]);
+                    coordinates.Add(new Coordinate(x, y));
+                }
+
+                coordinates.Add(coordinates[0]);
+
+                drawing.Shape = new Polygon(new LinearRing(coordinates.ToArray()) { SRID = 4326 }) { SRID = 4326 };
             }
 
             _dataContext.Add(drawing);
@@ -73,6 +92,5 @@ namespace HaritaSite.Controllers
 
             return RedirectToAction("Home");
         }
-
     }
 }
