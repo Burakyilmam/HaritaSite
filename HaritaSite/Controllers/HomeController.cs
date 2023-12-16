@@ -2,32 +2,63 @@
 using HaritaSite.Models.Context;
 using HaritaSite.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.CodeModifier.CodeChange;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
-
+using RestSharp;
 using System.Diagnostics;
 using System.Drawing;
+using Method = RestSharp.Method;
 
 namespace HaritaSite.Controllers
 {
     public class HomeController : Controller
     {
         private readonly DataContext _dataContext;
+        private readonly IHttpClientFactory _clientFactory;
 
-        public HomeController(DataContext dataContext)
+        public HomeController(DataContext dataContext, IHttpClientFactory clientFactory)
         {
             _dataContext = dataContext;
+            _clientFactory = clientFactory;
         }
 
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
-            return View();
+            var client = _clientFactory.CreateClient();
+            var apiUrl = "https://api.collectapi.com/health/dutyPharmacy?ilce=&il=Bursa";
+            var apiKey = "0BwL1JfCfnAMXfl5Pfyiud:5E3msDJXPEn1us61lGTMcR";
+
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("apikey", apiKey);
+
+            try
+            {
+                var response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    // API'den gelen JSON verisini ViewBag üzerinden View'e taşı
+                    ViewBag.PharmaciesData = content;
+
+                    // Model olmadan direkt View'e yönlendir
+                    return View();
+                }
+                else
+                {
+                    var errorMessage = $"API çağrısı başarısız: {response.StatusCode} - {response.ReasonPhrase}";
+                    ViewBag.ErrorMessage = errorMessage;
+                    return View();
+                }
+            }
+            catch (HttpRequestException)
+            {
+                ViewBag.ErrorMessage = "HTTP isteği sırasında bir hata oluştu.";
+                return View();
+            }
         }
-        public IActionResult ListDrawing()
-        {
-            var drawing = _dataContext.Drawings.ToList();
-            return View(drawing);
-        }
+
         [HttpPost]
         public IActionResult SaveDrawing(Drawing drawing)
         {
