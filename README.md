@@ -1,7 +1,7 @@
 # HaritaSite
 .NET Core 6 , Entityframework , PostgreSQL , PostGis , CollectAPI - Nöbetçi Eczane API , Google Maps Direction API , Geolocation API ve Leaflet.JS kullanılarak oluşturulan harita örneğidir.
 <br><br>
-Demo görüntüleri -> https://www.youtube.com/watch?v=UoKPOMSguYg&list=PLPCWhaSK59AjvKOFFznG518uvJSpbI2pg&index=1
+Demo görüntüleri -> [https://www.youtube.com/watch?v=UoKPOMSguYg&list=PLPCWhaSK59AjvKOFFznG518uvJSpbI2pg&index=1](https://www.youtube.com/watch?v=e1S9AycsN8s&list=PLPCWhaSK59AjvKOFFznG518uvJSpbI2pg&index=1)
 ## Görseller
 ![eczane](https://github.com/Burakyilmam/HaritaSite/assets/61635780/e6cc2721-fe99-4541-bf66-07fefa263dfc)
 ![eczaneGoogle](https://github.com/Burakyilmam/HaritaSite/assets/61635780/6612674c-cf47-4b0a-bacd-82fe3bee271d)
