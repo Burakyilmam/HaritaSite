@@ -27,7 +27,7 @@ namespace HaritaSite.Controllers
         {
             var client = _clientFactory.CreateClient();
             var apiUrl = "https://api.collectapi.com/health/dutyPharmacy?ilce=&il=Bursa";
-            var apiKey = "0BwL1JfCfnAMXfl5Pfyiud:5E3msDJXPEn1us61lGTMcR";
+            var apiKey = "4EQNXyQGFje6jy1UYMP6V2:0C6EifM0zBqlOi6Dta9goe";
 
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("apikey", apiKey);
 
