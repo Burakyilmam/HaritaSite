@@ -17,7 +17,6 @@
             function (position) {
                 var userLatitude = position.coords.latitude;
                 var userLongitude = position.coords.longitude;
-
                 console.log('Kullanıcı konumu:', userLatitude, userLongitude);
             },
             function (error) {
@@ -119,20 +118,28 @@
 
         userLocationMarker = L.marker(location, { icon: userIcon }).addTo(map);
 
-        var popupContent = '<b>Kullanıcı Konumu</b><br>' +
-            'Konum: ' ;
-
         var userLatitude = location.lat;
         var userLongitude = location.lng;
+        var geocodingUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + userLatitude + '&lon=' + userLongitude;
+        console.log(geocodingUrl);
+        fetch(geocodingUrl)
+            .then(response => response.json())
+            .then(data => {
+                var address = data.display_name;
 
-        var popupContent = '<b>Kullanıcı Konumu Bilgileri</b><br>' +
-            'Konum: ' + userLatitude + ', ' + userLongitude;
+                var popupContent = '<b><center>Konum Bilgileri</center></b>' +
+                    '<b>Adres</b> <br>' + address + '<br>' +
+                    '<b>Koordinat</b><br> ' + userLatitude + ', ' + userLongitude;
 
-        userLocationMarker.bindPopup(popupContent);
+                userLocationMarker.bindPopup(popupContent);
 
-        userLocationMarker.on('click', function () {
-            userLocationMarker.openPopup();
-        });
+                userLocationMarker.on('click', function () {
+                    userLocationMarker.openPopup();
+                });
+
+                map.setView(location, 15);
+            })
+            .catch(error => console.error('Adres alınamadı:', error));
 
         map.setView(location, 15);
 
