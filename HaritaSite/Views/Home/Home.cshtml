@@ -120,7 +120,13 @@
         userLocationMarker = L.marker(location, { icon: userIcon }).addTo(map);
 
         var popupContent = '<b>Kullanıcı Konumu</b><br>' +
-            'Adres: [Buraya Adres Bilgisi]';
+            'Konum: ' ;
+
+        var userLatitude = location.lat;
+        var userLongitude = location.lng;
+
+        var popupContent = '<b>Kullanıcı Konumu Bilgileri</b><br>' +
+            'Konum: ' + userLatitude + ', ' + userLongitude;
 
         userLocationMarker.bindPopup(popupContent);
 
