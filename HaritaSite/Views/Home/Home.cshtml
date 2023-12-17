@@ -11,7 +11,23 @@
     <input type="hidden" name="Shape" id="geometryInput" value="" />
     <button type="submit">Kaydet</button>
 </form>
+<script>
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                var userLatitude = position.coords.latitude;
+                var userLongitude = position.coords.longitude;
 
+                console.log('Kullanıcı konumu:', userLatitude, userLongitude);
+            },
+            function (error) {
+                console.error('Konum alınamadı:', error.message);
+            }
+        );
+    } else {
+        console.error('Tarayıcı geolocation API desteklemiyor.');
+    }
+</script>
 <script>
     var pharmaciesData = @Html.Raw(Json.Serialize(ViewBag.PharmaciesData));
     console.log(pharmaciesData);
@@ -86,5 +102,46 @@
             'Adres: ' + pharmacy.address + '<br>' +
             'Telefon: ' + pharmacy.phone
         );
+    });
+
+    var userLocationMarker;
+    function addUserLocationToMap(location) {
+        if (userLocationMarker) {
+            userLocationMarker.remove();
+        }
+
+        var userIcon = L.icon({
+            iconUrl: 'https://cdn0.iconfinder.com/data/icons/user-icons-4/100/user-17-512.png',
+            iconSize: [40, 40],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32] 
+        });
+
+        userLocationMarker = L.marker(location, { icon: userIcon }).addTo(map);
+
+        var popupContent = '<b>Kullanıcı Konumu</b><br>' +
+            'Adres: [Buraya Adres Bilgisi]';
+
+        userLocationMarker.bindPopup(popupContent);
+
+        userLocationMarker.on('click', function () {
+            userLocationMarker.openPopup();
+        });
+
+        map.setView(location, 15);
+
+        var shapeType = document.getElementById('typeInput').value;
+        var coordinates = document.getElementById('coordinatesInput').value;
+
+    }
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+        var userLatLng = new L.LatLng(position.coords.latitude, position.coords.longitude);
+
+        addUserLocationToMap(userLatLng);
+
+        document.getElementById('coordinatesInput').value = position.coords.latitude + ',' + position.coords.longitude;
+    }, function (error) {
+        console.error('Geolocation error: ' + error.message);
     });
 </script>
